@@ -1,0 +1,7 @@
+.vscode/
+notebook/.ipynb_checkpoints/
+note.txt
+notebook/learning_dapi/
+notebook/eikon.cfg
+conversations/
+binary/
