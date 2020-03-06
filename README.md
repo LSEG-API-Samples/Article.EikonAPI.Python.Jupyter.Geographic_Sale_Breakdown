@@ -20,7 +20,7 @@ Note: This is not a full coding project repository yet.
 This model uses Worldscope Geographic Segment data for sales to display the key countries and regions for the constituents of an index. The template then aggregates the data so users can see the breakdown for the index itself.
 
 Core Worldscope Items used in the model are:
-- Geographic Segment 1: ```WC19601```
+- Geographic Segment 1 Sales: ```WC19601```
 - Geographic Segment 2: ```WC19611```
 - Geographic Segment 3: ```WC19621```
 - Geographic Segment 4: ```WC19631```
@@ -33,14 +33,14 @@ Core Worldscope Items used in the model are:
 
 ### Anwser from DataStream
 
-This is probably a data setting, as there isn’t any Worldscope data available for this company as of today, if you run the request with a historical date – im sure you will get data back on those items.  Alternativly use the pad function to pull the last values forward.
+This is probably a data setting, as there isnï¿½t any Worldscope data available for this company as of today, if you run the request with a historical date ï¿½ im sure you will get data back on those items.  Alternativly use the pad function to pull the last values forward.
 
 Yes that is correct latest value for 926288 is for 2018 year end.
 
 ### Anwer from Eikon Data API
 
-The fields providing geographic breakdown of the company’s fundamentals are listed in DIB under Content Classification – Reuters Fundamentals – Business and Geographic Segments - Geographic Segment.
-Here’s an example:
+The fields providing geographic breakdown of the companyï¿½s fundamentals are listed in DIB under Content Classification -> Reuters Fundamentals -> Business and Geographic Segments - Geographic Segment.
+Hereï¿½s an example:
 ek.get_data('AAPL.O', ['TR.BGS.GeoTotalRevenue.segmentName', 'TR.BGS.GeoTotalRevenue'])
 
 As for retrieving the list of stock RICs for a company, you could try using get_symbology method with ISIN as input and bestMatch parameter set to False, but the result is not going to fully match what you see in Eikon application. I cannot think of any way to use EDAPI to get the list of RICs for a company stock that would be as good as what you see in Eikon application.
@@ -49,5 +49,8 @@ As for retrieving the list of stock RICs for a company, you could try using get_
 
 - Datastream DSWS: Get data now but cannot find any detail regarding the **Geographic Segment** fields meaning. Need to check with Datastream team.
 - Some RICs (STAN.L example) does not have TR.BGS.GeoTotalRevenue or TR.BGS.GeoTotalRevenue.segmentName values. Do not know why. Need to further check.
+- It seems that I need to subscribe each Geographic Segment Desciption to verify each region information
+
+
 
 
