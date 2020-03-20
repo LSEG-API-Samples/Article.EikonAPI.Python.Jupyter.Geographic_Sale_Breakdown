@@ -33,15 +33,17 @@ Core Worldscope Items used in the model are:
 
 ### Anwser from DataStream
 
-This is probably a data setting, as there isn�t any Worldscope data available for this company as of today, if you run the request with a historical date � im sure you will get data back on those items.  Alternativly use the pad function to pull the last values forward.
+This is probably a data setting, as there isn�t any Worldscope data available for this company as of today, if you run the request with a historical date  im sure you will get data back on those items.  Alternativly use the pad function to pull the last values forward.
 
 Yes that is correct latest value for 926288 is for 2018 year end.
 
 ### Anwer from Eikon Data API
 
-The fields providing geographic breakdown of the company�s fundamentals are listed in DIB under Content Classification -> Reuters Fundamentals -> Business and Geographic Segments - Geographic Segment.
-Here�s an example:
+The fields providing geographic breakdown of the company's fundamentals are listed in DIB under Content Classification -> Reuters Fundamentals -> Business and Geographic Segments - Geographic Segment.
+Here'ss an example:
+```
 ek.get_data('AAPL.O', ['TR.BGS.GeoTotalRevenue.segmentName', 'TR.BGS.GeoTotalRevenue'])
+```
 
 As for retrieving the list of stock RICs for a company, you could try using get_symbology method with ISIN as input and bestMatch parameter set to False, but the result is not going to fully match what you see in Eikon application. I cannot think of any way to use EDAPI to get the list of RICs for a company stock that would be as good as what you see in Eikon application.
 
