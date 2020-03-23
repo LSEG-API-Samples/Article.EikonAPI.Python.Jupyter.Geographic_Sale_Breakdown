@@ -1,58 +1,173 @@
-# Global Company Sales breakdown
-## Introduction
 
-This is a repository for Global Company Sales breakdown work flow. This project goal is to retrieve all the constituents of any global stock market and returns the sales breakdown for each company and region.
+# Fundamentals Company Geographic Sales Breakdown
+- Last update: March 2020
+- Environment: Windows 
+- Compiler: Python and Conda distribution
+- Prerequisite: Refinitiv Eikon or Refinitiv Workspace application with access to Eikon Data APIs.
 
-## What is constituents?
+## Project Overview
 
-Based on [Investopeida web site](https://www.investopedia.com/terms/c/constituent.asp), a constituent is a company with shares that are part of an index like the S&P 500 or Dow Jones Industrial Average. It is a component or a member of the index. The aggregate of the shares of all constituents are used to calculate the value of the index.
+Reuters Fundamentals has over 35 years of experience in collecting and delivering the most timely and highestquality fundamentals data in the industry, including an unmatched depth and breadth of primary financial statements, footnote items, segment data, industry specific operating metrics, financial ratios, and much more. 
 
-Each constituent has to meet certain requirements pertaining to capitalization, market exposure, and liquidity before being added to an index.
+Reuters Fundamentals standardized and As Reported financial statement data – both interim and annual – along with per-share data, calculated financial ratios, company profile information, security data, Officers & Directors and market content for over 90,000 issuers. 
 
-## API
-Using [Eikon Data API](https://developers.refinitiv.com/eikon-apis/eikon-data-api).
-์
-Note: This is not a full coding project repository yet.
+## Business & Geographic Segments
 
-## Research
+Reuters Fundamentals also contains information for each segment reported by a company on an annual and interim basis Global coverage. This information which let you drive down your interested comapny sale revenue of each region.
 
-### DataStream fields
-This model uses Worldscope Geographic Segment data for sales to display the key countries and regions for the constituents of an index. The template then aggregates the data so users can see the breakdown for the index itself.
+This project shows how to use Refinitiv [Eikon Data API](https://developers.refinitiv.com/eikon-apis/eikon-data-api) to consume company geographic sale data from Refinitiv Fundamentals, then breakdown and display each region revenue in readable graph format in the [classic Jupyter Notebook](https://jupyter.org/) application.
 
-Core Worldscope Items used in the model are:
-- Geographic Segment 1 Sales: ```WC19601```
-- Geographic Segment 2: ```WC19611```
-- Geographic Segment 3: ```WC19621```
-- Geographic Segment 4: ```WC19631```
-- Geographic Segment 5: ```WC19641```
-- Geographic Segment 6: ```WC19651```
-- Geographic Segment 7: ```WC19661```
-- Geographic Segment 8: ```WC19671```
-- Geographic Segment 9: ```WC19681```
-- Geographic Segment 10: ```WC19691```
+![Figure-1](images/rw_data_item_browser_2.png "Data item browser") 
 
-### Anwser from DataStream
+## Prerequisite
+This example requires the following dependencies softwares and libraries.
+1. Refinitiv Workspace/Eikon Desktop application and user.
+2. Python [Ananconda](https://www.anaconda.com/distribution/) or [MiniConda](https://docs.conda.io/en/latest/miniconda.html) distribution/package manager.
+3. [Classic Jupyter Notebook](https://jupyter.org/) web application.
+4. Required Python Packages: [Eikon](https://pypi.org/project/eikon/), [Pandas](https://pypi.org/project/pandas/1.0.2/), [Numpy](https://pypi.org/project/numpy/1.18.1/) and [Matplotlib](https://pypi.org/project/matplotlib/3.1.3/) (They will be installed via conda environment creation).
 
-This is probably a data setting, as there isn�t any Worldscope data available for this company as of today, if you run the request with a historical date  im sure you will get data back on those items.  Alternativly use the pad function to pull the last values forward.
+*Note:* 
+- This Project has been qualified with Python version 3.7.6 and Conda version 4.8.1
+-  You can install a classic Jupyter Notebook on your local machine and then test the example on the machine. The alternate choice is a free Jupyter Notebook on cloud environment such as [Azure Notebook](https://notebooks.azure.com/) provided by Microsoft. You can find more details from [this tutorial](https://docs.microsoft.com/en-us/azure/notebooks/tutorial-create-run-jupyter-notebook). If you are not familiar with Jupyter Notebook, the following [tutorial](https://www.datacamp.com/community/tutorials/tutorial-jupyter-notebook) created by DataCamp may help.
 
-Yes that is correct latest value for 926288 is for 2018 year end.
+## Application Files
+This example project contains the following files and folders
+1. *notebook_python/fundamentals_geographic_sale.ipynb*: The example Jupyter Notebook application file.
+2. *global_sale_env.yml*: The Jupyter Notebook environment and dependencies configuration file.
+3. *images*: Project images folder.
+3. *LICENSE.md*: Project's license file.
+4. *README.md*: Project's README file.
 
-### Anwer from Eikon Data API
+## How to run this example
 
-The fields providing geographic breakdown of the company's fundamentals are listed in DIB under Content Classification -> Reuters Fundamentals -> Business and Geographic Segments - Geographic Segment.
-Here'ss an example:
+Please note that the Refintiv Workspace/Eikon application integrates a Data API proxy that acts as an interface between the Eikon Data API Python library and the Eikon Data Platform. For this reason, the Refinitiv Workspace/Eikon application must be running when you use the Eikon Data API Python library.
+
+The first step is unzip or download the example project folder into a directory of your choice, then choose how to run application based on your environment below.
+
+### Running the Notebook example.
+1. Open Anaconda Prompt and go to project's folder
+2. Run the following command in a Anaconda Prompt to create Conda environment named *MRN_TRNA* for the project.
+    ```
+    (base) $>conda env create -f global_sale_env.yml
+    ```
+3. Once the environment is created, activate Conda environment named ```global_sale``` with this command in Anaconda Prompt
+    ```
+    (base) $>conda activate global_sale
+    ```
+4. Go to project's notebook folder. and create a file name ```eikon.cfg``` with the following content
+    ```
+    [eikon]
+    app_id = YOUR_APP_ID_HERE
+    ```
+
+5. In the current Anaconda Prompt, go to project's notebook folder. Run the following command to start classic Jupyter Notebook in the notebook folder.
+    ```
+    (global_sale) $>notebook>jupyter notebook
+    ```
+6. Open *fundamentals_geographic_sale.ipynb* Notebook document, then follow through each notebook cell.
+
+    ![Figure-2](images/jupyter_notebook.png "Open the Notebook application") 
+
+## Implementation
+
+There are three main steps for this implementation
+1. Get Company Geographic Sale Data.
+2. Restructure Company Geographic Sale Data Dataframe object that returned from Eikon Data API.
+3. Plotting the graph.
+
+### Get Company Geographic Sale Data
+
+Firstly, the Notebook application uses Eikon Data API ```get_data``` function to request the company fundamentals via following  fields:
+- TR.BGS.GeoTotalRevenue.segmentName: Segment (Geographic) data
+- TR.BGS.GeoTotalRevenue: Each segment revenue value
+- TR.CompanyName
+
 ```
-ek.get_data('AAPL.O', ['TR.BGS.GeoTotalRevenue.segmentName', 'TR.BGS.GeoTotalRevenue'])
+df,err = ek.get_data('IBM.N', ['TR.BGS.GeoTotalRevenue.segmentName', 'TR.BGS.GeoTotalRevenue','TR.CompanyName'])
+df
 ```
 
-As for retrieving the list of stock RICs for a company, you could try using get_symbology method with ISIN as input and bestMatch parameter set to False, but the result is not going to fully match what you see in Eikon application. I cannot think of any way to use EDAPI to get the list of RICs for a company stock that would be as good as what you see in Eikon application.
+![Figure-3](images/eikon_output_1.png "TR.BGS.GeoTotalRevenue Dataframe") 
 
-## Development Status
+### Restructure Company Geographic Sale Data Dataframe object.
 
-- Datastream DSWS: Get data now but cannot find any detail regarding the **Geographic Segment** fields meaning. Need to check with Datastream team.
-- Some RICs (STAN.L example) does not have TR.BGS.GeoTotalRevenue or TR.BGS.GeoTotalRevenue.segmentName values. Do not know why. Need to further check.
-- It seems that I need to subscribe each Geographic Segment Desciption to verify each region information
+The returned Dataframe object from Eikon ```get_data``` function is not ready to be plotted as "readable" graph yet. 
+
+We start by renaming the *Segment Name* and *Geographic Total Revenues (Calculated)* columns to readable names like *Geographic* and *Sales in £m*.
+
+```
+df_graph = df.copy()
+
+df_graph.rename(columns={
+                   'Segment Name':'Geographic',
+                   'Geographic Total Revenues (Calculated)':'Sales in £m'},
+         inplace = True)
+
+df_graph
+```
+
+![Figure-4](images/eikon_output_2.png "Rename columns") 
+
+Then we get the Company name and total revenue of all geographic segments from Dataframe object.
+
+```
+total_sale = df_graph.iloc[df_graph.shape[0] - 1]['Sales in £m']
+
+company_name = df_graph.iloc[0]['Company Name']
+```
+
+And the last thing on this phase is to remove total revenue rows from the Dataframe.
+
+```
+df_graph = df_graph[df_graph['Geographic'] != 'Segment Total']
+df_graph = df_graph[df_graph['Geographic'] != 'Consolidated Total']
+```
+
+### Plotting the graph
+Finally, we are now ready for plotting a graph. We create a Python function ```format_millions``` to format an input revenue data into a million unit. We use Python [matplotlib.pyplot](https://matplotlib.org/api/pyplot_api.html) library to plot a bar graph that represent each region revenue in Jupyter Notebook.
 
 
+```
+def format_millions(x, pos):
+    'The two args are the value and tick position'
+    return '$%1.1fM' % (x * 1e-11)
 
 
+# Plotting a Graph
+
+df_graph.set_index('Geographic',drop=True,inplace=True)
+fig = plt.figure()
+
+#Format Total Sale display unit as a graph footer.
+fig.text(.5, -.05, 'Total Sale %s' %(f'{total_sale:,.2f}'), ha='center',fontsize='large')
+
+# Create graph title from Company and RIC names dynamically.
+plt.ticklabel_format(style = 'plain')
+plt.title('%s (%s) Geographic Sale Breakdown' % (company_name, 'IBM.N'), color='black',fontsize='x-large')
+ax = fig.gca()
+
+#Apply Sale data into millions function.
+formatter = FuncFormatter(format_millions)
+ax.xaxis.set_major_formatter(formatter)
+
+df_graph.plot(kind='barh', ax = fig.gca())
+plt.show()
+```
+
+![Figure-5](images/eikon_output_3.png "IBM Geographic Sale Breakdown Bar Graph") 
+
+## Conclusion
+
+Refinitiv provides a wide range of Reuters Fundamentals data for your investment decisions including company geographic sale information. This information helps you analysis the revenue from each geographic region of your interested company in both panel data and graph formats.
+
+## References
+* [Refinitiv Eikon Data API page](https://developers.refinitiv.com/eikon-apis/eikon-data-api) on the [Refinitiv Developer Community](https://developers.refinitiv.com/) web site.
+* [Eikon Data API Quick Start Guide page](https://developers.refinitiv.com/eikon-apis/eikon-data-api/quick-start).
+* [Eikon Data API Tutorial page](https://developers.refinitiv.com/eikon-apis/eikon-data-api/learning).
+* [Python Quants Video Tutorial Series for Eikon API](https://community.developers.refinitiv.com/questions/37865/announcement-new-python-quants-video-tutorial-seri.html).
+* [Eikon Data APY Python Reference Guide](https://docs-developers.refinitiv.com/1584688434238/14684/book/en/index.html).
+* [Eikon Data API Troubleshooting article](https://developers.refinitiv.com/article/eikon-data-apipython-troubleshooting-refinitiv).
+* [Pandas API Reference](https://pandas.pydata.org/docs/reference/index.html).
+* [Pyplot Graph API Reference](https://matplotlib.org/api/pyplot_api.html).
+
+For any question related to this example or Eikon Data API, please use the Developers Community [Q&A Forum](https://community.developers.refinitiv.com/spaces/92/eikon-scripting-apis.html).
