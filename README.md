@@ -28,7 +28,7 @@ This example requires the following dependencies softwares and libraries.
 
 *Note:* 
 - This Project has been qualified with Python version 3.7.6 and Conda version 4.8.3
--  You can install a classic Jupyter Notebook on your local machine and then test the example on the machine. The alternate choice is a free Jupyter Notebook on cloud environment such as [Azure Notebook](https://notebooks.azure.com/) provided by Microsoft. You can find more details from [this tutorial](https://docs.microsoft.com/en-us/azure/notebooks/tutorial-create-run-jupyter-notebook). If you are not familiar with Jupyter Notebook, the following [tutorial](https://www.datacamp.com/community/tutorials/tutorial-jupyter-notebook) created by DataCamp may help.
+- If you are not familiar with Jupyter Notebook, the following [tutorial](https://www.datacamp.com/community/tutorials/tutorial-jupyter-notebook) created by DataCamp may help.
 
 ## <a id="application_files"></a>Application Files
 This example project contains the following files and folders
@@ -131,7 +131,7 @@ df_graph = df_graph[df_graph['Geographic'] != 'Consolidated Total']
 
 ### Plotting a graph
 
-Finally, we are now ready for plotting a graph. We create a Python function ```format_revenues_number``` to to reformat large revenue numbers into a readable numbers in trillions, billions or millions unit. a readable numbers in trillions, billions or millions unit. This function source code is based on [Dan Friedman](https://github.com/frieds/frieds.github.io)'s [How to Format Large Tick Values tutorial](https://github.com/frieds/frieds.github.io/tree/master/data-visualizations/how_to_format_large_tick_values_files) source code via GitHub.
+Finally, we are now ready for plotting a graph. We create a Python function ```format_revenues_number``` to reformat large revenue numbers into a readable numbers in trillions, billions or millions unit. a readable numbers in trillions, billions or millions unit. This function source code is based on [Dan Friedman](https://github.com/frieds/frieds.github.io)'s [How to Format Large Tick Values tutorial](https://github.com/frieds/frieds.github.io/tree/master/data-visualizations/how_to_format_large_tick_values_files) source code via GitHub.
 
 ```
 def format_revenues_number(tick_val, pos):
@@ -205,12 +205,15 @@ plt.show()
 Refinitiv provides a wide range of Reuters Fundamentals data for your investment decisions including company geographic sale information. This information helps you analysis the revenue from each geographic region of your interested company in both panel data and graph formats.
 
 ## <a id="references"></a>References
+
+You can find more detail regarding the Eikon Data APIs and related technologies for this Notebook from the following resources:
 * [Refinitiv Eikon Data API page](https://developers.refinitiv.com/eikon-apis/eikon-data-api) on the [Refinitiv Developer Community](https://developers.refinitiv.com/) web site.
 * [Eikon Data API Quick Start Guide page](https://developers.refinitiv.com/eikon-apis/eikon-data-api/quick-start).
 * [Eikon Data API Tutorial page](https://developers.refinitiv.com/eikon-apis/eikon-data-api/learning).
 * [Python Quants Video Tutorial Series for Eikon API](https://community.developers.refinitiv.com/questions/37865/announcement-new-python-quants-video-tutorial-seri.html).
 * [Eikon Data APY Python Reference Guide](https://docs-developers.refinitiv.com/1584688434238/14684/book/en/index.html).
 * [Eikon Data API Troubleshooting article](https://developers.refinitiv.com/article/eikon-data-apipython-troubleshooting-refinitiv).
+* [Dan Friedman's Python programming, data analysis, data visualizations tutorials](https://github.com/frieds/frieds.github.io).
 * [Pandas API Reference](https://pandas.pydata.org/docs/reference/index.html).
 * [Pyplot Graph API Reference](https://matplotlib.org/api/pyplot_api.html).
 
