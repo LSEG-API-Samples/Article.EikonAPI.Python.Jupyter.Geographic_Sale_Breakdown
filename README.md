@@ -48,7 +48,7 @@ This example requires the following dependencies softwares and libraries.
 
 *Note:* 
 - This Project has been qualified with Python version 3.11.5
-- If you are not familiar with Jupyter Notebook, the following [tutorial](https://www.datacamp.com/community/tutorials/tutorial-jupyter-notebook) created by DataCamp may help you.
+- If you are not familiar with Jupyter Lab application, the following [tutorial](https://www.datacamp.com/tutorial/tutorial-jupyter-notebook) created by DataCamp may help you.
 
 ## <a id="eikon_setup"></a>Data Library with Desktop Session Set Up
 
