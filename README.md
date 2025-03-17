@@ -102,15 +102,23 @@ The first step is unzip or download the example project folder into a directory 
     }
     ```
 
-5. In the current Command Prompt, go to project's notebook folder. Run the following command to start Jupyter Lab in the notebook folder.
+5. Run the following command in a Command Prompt to install the project dependencies
+
+    ```bash
+    $>(global_sale) pip install -r requirements.txt
+    ```
+
+6. In the current Command Prompt, go to project's notebook folder. Run the following command to start Jupyter Lab in the notebook folder.
 
     ```bash
     $>(global_sale)>notebook>jupyter lab
     ```
 
-6. Open *fundamentals_ld.ipynb* Notebook document, then follow through each notebook cell.
+7. Open *fundamentals_ld.ipynb* Notebook document, then follow through each notebook cell.
 
     ![Figure-2](images/jupyter_notebook.png "Open the Notebook application") 
+
+**Note**: If you are using AnaConda/MiniConda, please refer to this [Conda - Managing environments document](https://docs.conda.io/projects/conda/en/stable/user-guide/tasks/manage-environments.html) for more detail about how create and activate environment with Conda.
 
 ## <a id="implementation"></a>Implementation
 
@@ -120,7 +128,7 @@ There are three main steps for this implementation
 3. Plotting a graph.
 
 ### Get Company Geographic Sale Data
-o
+
 Firstly, the Notebook application uses Data Library ```get_data``` method to request the company fundamentals via following  fields:
 - TR.BGS.GeoTotalRevenue.segmentName: Segment (Geographic) data
 - TR.BGS.GeoTotalRevenue: Each segment revenue value
@@ -155,7 +163,7 @@ df_graph.rename(columns={
 df_graph
 ```
 
-![Figure-4](images/datalib_output_2.png "Rename columns") 
+![Figure-4](images/datalib_output_5.png "Rename columns") 
 
 Then we get the Company name and Consolidated Total Revenue information from Dataframe object.
 
@@ -241,7 +249,7 @@ df_graph.plot(kind='barh', ax = fig.gca())
 plt.show()
 ```
 
-![Figure-5](images/datalib_output_3.png "IBM Geographic Sale Breakdown Bar Graph") 
+![Figure-5](images/datalib_output_6.png "ARM Geographic Sale Breakdown Bar Graph") 
 
 ## <a id="summary"></a>Conclusion
 
